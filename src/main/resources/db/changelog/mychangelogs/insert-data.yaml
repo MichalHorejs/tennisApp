@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: Michal
+      changes:
+        - insert:
+            tableName: court
+            columns:
+              - column:
+                  name: courtId
+                  autoIncrement: true
+              - column:
+                  name: surface
+                  value: "GRASS"
+              - column:
+                  name: isDeleted
+                  valueBoolean: "false"
+  - changeSet:
+      id: 4
+      author: Michal
+      changes:
+        - insert:
+            tableName: court
+            columns:
+              - column:
+                  name: courtId
+                  autoIncrement: true
+              - column:
+                  name: surface
+                  value: "CLAY"
+              - column:
+                  name: isDeleted
+                  valueBoolean: "false"
+  - changeSet:
+      id: 5
+      author: Michal
+      changes:
+        - insert:
+            tableName: court
+            columns:
+              - column:
+                  name: courtId
+                  autoIncrement: true
+              - column:
+                  name: surface
+                  value: "HARD"
+              - column:
+                  name: isDeleted
+                  valueBoolean: "false"
+  - changeSet:
+      id: 6
+      author: Michal
+      changes:
+        - insert:
+            tableName: court
+            columns:
+              - column:
+                  name: courtId
+                  autoIncrement: true
+              - column:
+                  name: surface
+                  value: "ARTIFICIAL"
+              - column:
+                  name: isDeleted
+                  valueBoolean: "false"
