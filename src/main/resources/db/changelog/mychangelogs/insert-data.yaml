@@ -1,7 +1,8 @@
 databaseChangeLog:
+# Inserting data into the table court
   - changeSet:
-      id: 3
-      author: Michal
+      id: 1
+      author: Data insertion
       changes:
         - insert:
             tableName: court
@@ -15,10 +16,6 @@ databaseChangeLog:
               - column:
                   name: isDeleted
                   valueBoolean: "false"
-  - changeSet:
-      id: 4
-      author: Michal
-      changes:
         - insert:
             tableName: court
             columns:
@@ -31,10 +28,6 @@ databaseChangeLog:
               - column:
                   name: isDeleted
                   valueBoolean: "false"
-  - changeSet:
-      id: 5
-      author: Michal
-      changes:
         - insert:
             tableName: court
             columns:
@@ -47,10 +40,6 @@ databaseChangeLog:
               - column:
                   name: isDeleted
                   valueBoolean: "false"
-  - changeSet:
-      id: 6
-      author: Michal
-      changes:
         - insert:
             tableName: court
             columns:
@@ -60,6 +49,49 @@ databaseChangeLog:
               - column:
                   name: surface
                   value: "ARTIFICIAL"
+              - column:
+                  name: isDeleted
+                  valueBoolean: "false"
+# Inserting data into the table users
+  - changeSet:
+      id: 3
+      author: Data insertion
+      changes:
+        - insert:
+            tableName: Users
+            columns:
+              - column:
+                  name: phoneNumber
+                  value: "123456789"
+              - column:
+                  name: name
+                  value: "user"
+              - column:
+                  name: password
+                  # user
+                  value: "$2a$10$aDN7gm4fww887IEI9NI7du5L/RBEoHDn3uG/y6FzPvygQcsi/1OW6"
+              - column:
+                  name: role
+                  value: "USER"
+              - column:
+                  name: isDeleted
+                  valueBoolean: "false"
+        - insert:
+            tableName: Users
+            columns:
+              - column:
+                  name: phoneNumber
+                  value: "987654321"
+              - column:
+                  name: name
+                  value: "admin"
+              - column:
+                  name: password
+                  # admin
+                  value: "$2a$10$ChvYxkUtRPc2DxZ54c1OHeT5L6f9MHfuwEz8wEyNWvzqoCtsqbViC"
+              - column:
+                  name: role
+                  value: "ADMIN"
               - column:
                   name: isDeleted
                   valueBoolean: "false"

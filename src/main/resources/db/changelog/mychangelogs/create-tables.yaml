@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Tables creation
+      changes:
+# COURT TABLE
+        - createTable:
+            tableName: court
+            columns:
+              - column:
+                  name: courtId
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: surface
+                  type: varchar(11)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: isDeleted
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+# USER TABLE
+  - changeSet:
+      id: 2
+      author: Michal
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: PHONENUMBER
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: NAME
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: PASSWORD
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ROLE
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ISDELETED
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false

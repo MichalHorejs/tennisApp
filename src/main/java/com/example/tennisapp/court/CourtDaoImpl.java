@@ -3,6 +3,7 @@ package com.example.tennisapp.court;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class CourtDaoImpl implements CourtDao {
     }
 
     @Override
+    @Transactional
     public void addCourt(Court court) {
         entityManager.persist(court);
     }
