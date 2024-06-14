@@ -6,8 +6,6 @@ import com.example.tennisapp.enums.Role;
 import com.example.tennisapp.enums.Surface;
 import com.example.tennisapp.models.Court;
 import com.example.tennisapp.models.User;
-import lombok.AllArgsConstructor;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -30,7 +28,7 @@ public class DatabaseLoader {
     private final PasswordEncoder passwordEncoder;
 
     @Bean
-    CommandLineRunner commandLineRunner(CourtDao courtDao){
+    CommandLineRunner commandLineRunner(){
         return args -> {
             if (insertData) {
                 Court court = new Court(Surface.GRASS);
