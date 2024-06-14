@@ -2,7 +2,10 @@ package com.example.tennisapp.daos;
 
 import com.example.tennisapp.models.User;
 
+import java.util.Optional;
+
 public interface UserDao {
-    User getUserByPhoneNumber(String phoneNumber);
+    Optional<User> getUserByPhoneNumber(String phoneNumber);
     void save(User user);
+    Optional<User> update(User user);
 }

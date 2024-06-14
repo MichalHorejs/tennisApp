@@ -1,5 +1,7 @@
 package com.example.tennisapp.controllers;
 
+import com.example.tennisapp.dtos.user.UserPutDto;
+import com.example.tennisapp.dtos.user.UserResponse;
 import com.example.tennisapp.models.User;
 import com.example.tennisapp.services.UserService;
 import lombok.AllArgsConstructor;
@@ -14,14 +16,22 @@ public class UserController {
         private final UserService userService;
 
         @GetMapping(path = "{phoneNumber}")
-        public User getUserByPhoneNumber(@PathVariable("phoneNumber") String phoneNumber) {
-            System.out.println("Controller phoneNumber = " + phoneNumber);
-            return this.userService.getUserByPhoneNumber(phoneNumber);
+        public UserResponse getUserByPhoneNumber(@PathVariable("phoneNumber") String phoneNumber) {
+            User user = this.userService.getUserByPhoneNumber(phoneNumber);
+            return new UserResponse(user.getPhoneNumber(), user.getName(), user.getRole());
         }
 
         @PostMapping
-        public ResponseEntity<?> saveUser(@RequestBody User user) {
-            this.userService.saveUser(user);
+        public ResponseEntity<?> save(@RequestBody User user) {
+            this.userService.save(user);
+            return ResponseEntity.ok().build();
+        }
+
+        @PutMapping
+        public ResponseEntity<?> update(@RequestBody UserPutDto userPutDto) {
+            this.userService.update(
+                    new User(userPutDto.getPhoneNumber(), userPutDto.getName(), userPutDto.getPassword())
+            );
             return ResponseEntity.ok().build();
         }
 }

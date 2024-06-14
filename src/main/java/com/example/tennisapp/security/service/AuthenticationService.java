@@ -1,5 +1,7 @@
 package com.example.tennisapp.security.service;
 
+import com.example.tennisapp.enums.Role;
+import com.example.tennisapp.exceptions.BadRequestException;
 import com.example.tennisapp.security.models.AuthenticationResponse;
 import com.example.tennisapp.models.User;
 import com.example.tennisapp.daos.UserDao;
@@ -19,6 +21,9 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(User request){
+        if (request.getRole().equals(Role.ADMIN)){
+            throw new BadRequestException("Admin cannot be registered");
+        }
         User user = new User();
         user.setPhoneNumber(request.getPhoneNumber());
         user.setName(request.getName());
@@ -38,7 +43,8 @@ public class AuthenticationService {
                 )
         );
 
-        User user = userDao.getUserByPhoneNumber(request.getPhoneNumber());
+        User user = userDao.getUserByPhoneNumber(request.getPhoneNumber())
+                .orElseThrow(() -> new BadRequestException("User not found"));
         String token = jwtService.generateToken(user);
 
         return new AuthenticationResponse(token);

@@ -1,6 +1,5 @@
 package com.example.tennisapp.configs;
 
-import com.example.tennisapp.daos.CourtDao;
 import com.example.tennisapp.daos.UserDao;
 import com.example.tennisapp.enums.Role;
 import com.example.tennisapp.enums.Surface;
@@ -25,7 +24,7 @@ public class DatabaseLoader {
     private boolean insertMoreData;
 
     private final CourtService courtService;
-    private final UserDao userDao;
+    private final UserDao userDao; // allowing admin insertion2
     private final PasswordEncoder passwordEncoder;
 
     @Bean

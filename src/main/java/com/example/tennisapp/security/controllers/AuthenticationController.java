@@ -1,5 +1,8 @@
 package com.example.tennisapp.security.controllers;
 
+import com.example.tennisapp.enums.Role;
+import com.example.tennisapp.enums.Surface;
+import com.example.tennisapp.exceptions.BadRequestException;
 import com.example.tennisapp.security.models.AuthenticationResponse;
 import com.example.tennisapp.security.service.AuthenticationService;
 import com.example.tennisapp.models.User;

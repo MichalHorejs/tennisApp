@@ -1,8 +1,6 @@
 package com.example.tennisapp.daos;
 
-import com.example.tennisapp.enums.Surface;
 import com.example.tennisapp.models.Court;
-import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;

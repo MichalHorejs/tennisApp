@@ -1,8 +1,8 @@
 package com.example.tennisapp.controllers;
 
-import com.example.tennisapp.dtos.CourtDeleteDto;
-import com.example.tennisapp.dtos.CourtPutDto;
-import com.example.tennisapp.dtos.CourtPostDto;
+import com.example.tennisapp.dtos.court.CourtDeleteDto;
+import com.example.tennisapp.dtos.court.CourtPutDto;
+import com.example.tennisapp.dtos.court.CourtPostDto;
 import com.example.tennisapp.models.Court;
 import com.example.tennisapp.services.CourtService;
 import jakarta.validation.Valid;
