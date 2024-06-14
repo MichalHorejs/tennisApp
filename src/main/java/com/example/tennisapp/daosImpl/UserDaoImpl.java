@@ -1,15 +1,11 @@
 package com.example.tennisapp.daosImpl;
 
 import com.example.tennisapp.daos.UserDao;
-import com.example.tennisapp.models.Court;
 import com.example.tennisapp.models.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

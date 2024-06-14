@@ -4,7 +4,6 @@ import com.example.tennisapp.enums.Role;
 import com.example.tennisapp.exceptions.BadRequestException;
 import com.example.tennisapp.models.User;
 import com.example.tennisapp.daos.UserDao;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
