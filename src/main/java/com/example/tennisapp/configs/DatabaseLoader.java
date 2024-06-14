@@ -6,6 +6,7 @@ import com.example.tennisapp.enums.Role;
 import com.example.tennisapp.enums.Surface;
 import com.example.tennisapp.models.Court;
 import com.example.tennisapp.models.User;
+import com.example.tennisapp.services.CourtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -23,7 +24,7 @@ public class DatabaseLoader {
     @Value("${app.insert-more-data}")
     private boolean insertMoreData;
 
-    private final CourtDao courtDao;
+    private final CourtService courtService;
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
 
@@ -32,16 +33,17 @@ public class DatabaseLoader {
         return args -> {
             if (insertData) {
                 Court court = new Court(Surface.GRASS);
-                this.courtDao.save(court);
+                this.courtService.save(court);
 
                 court = new Court(Surface.HARD);
-                this.courtDao.save(court);
+                this.courtService.save(court);
 
                 court = new Court(Surface.CLAY);
-                this.courtDao.save(court);
+                this.courtService.save(court);
 
                 court = new Court(Surface.ARTIFICIAL);
-                this.courtDao.save(court);
+                court.setIsDeleted(true);
+                this.courtService.save(court);
 
                 if (insertMoreData) {
                     User user = new User(

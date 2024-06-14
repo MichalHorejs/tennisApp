@@ -1,5 +1,8 @@
 package com.example.tennisapp.controllers;
 
+import com.example.tennisapp.dtos.CourtDeleteDto;
+import com.example.tennisapp.dtos.CourtPutDto;
+import com.example.tennisapp.dtos.CourtPostDto;
 import com.example.tennisapp.models.Court;
 import com.example.tennisapp.services.CourtService;
 import jakarta.validation.Valid;
@@ -27,8 +30,26 @@ public class CourtController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addCourt(@Valid @RequestBody Court court) {
-        this.courtService.addCourt(court);
+    public ResponseEntity<?> save(@Valid @RequestBody CourtPostDto courtPostDto) {
+        this.courtService.save(
+                new Court(courtPostDto.getSurface())
+        );
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<?> update(@Valid @RequestBody CourtPutDto courtPutDto) {
+        this.courtService.update(
+                new Court(courtPutDto.getCourtId(), courtPutDto.getSurface())
+        );
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> delete(@Valid @RequestBody CourtDeleteDto courtDeleteDto) {
+        this.courtService.delete(
+                new Court(courtDeleteDto.getCourtId())
+        );
         return ResponseEntity.ok().build();
     }
 

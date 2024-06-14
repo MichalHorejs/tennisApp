@@ -3,13 +3,11 @@ package com.example.tennisapp.models;
 import com.example.tennisapp.enums.Surface;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
 @Table(name = "COURT")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Court {
 
@@ -18,8 +16,6 @@ public class Court {
     @Column(name = "COURTID")
     private Long courtId;
 
-//  TODO: Error message for invalid surface
-    @NotNull(message = "Surface cannot be null.")
     @Enumerated(EnumType.STRING)
     @Column(name = "SURFACE")
     private Surface surface;
@@ -30,5 +26,14 @@ public class Court {
 
     public Court(Surface surface) {
         this.surface = surface;
+    }
+
+    public Court(Long courtId, Surface surface) {
+        this.courtId = courtId;
+        this.surface = surface;
+    }
+
+    public Court(Long courtId) {
+        this.courtId = courtId;
     }
 }

@@ -16,21 +16,32 @@ public class CourtService {
     private final CourtDao courtDao;
 
     public List<Court> getCourts() {
-        return this.courtDao.getCourts();
+        List<Court> courts = this.courtDao.getCourts();
+        if (courts.isEmpty()) {
+            throw new BadRequestException("Zero courts found");
+        }
+        return courts;
     }
 
     public Court getCourtById(Long courtId) {
-
-        Court court = this.courtDao.getCourtById(courtId);
-
-        if (court == null) {
-            throw new BadRequestException("Court with id " + courtId + " does not exist.");
-        }
-        return court;
+        return this.courtDao.getCourtById(courtId)
+                .orElseThrow(() -> new BadRequestException("Court not found"));
     }
 
     @Transactional
-    public void addCourt(Court court) {
+    public void save(Court court) {
         this.courtDao.save(court);
+    }
+
+    @Transactional
+    public void update(Court court) {
+        this.courtDao.update(court)
+                .orElseThrow(() -> new BadRequestException("Court not found"));
+    }
+
+    @Transactional
+    public void delete(Court court) {
+        this.courtDao.delete(court)
+                .orElseThrow(() -> new BadRequestException("Court not found"));
     }
 }
