@@ -1,5 +1,6 @@
-package com.example.tennisapp.court;
+package com.example.tennisapp.models;
 
+import com.example.tennisapp.enums.Surface;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -7,9 +8,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "COURT")
-@Getter
-@Setter
-@ToString
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Court {

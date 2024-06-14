@@ -1,6 +1,6 @@
 package com.example.tennisapp.security.service;
 
-import com.example.tennisapp.user.User;
+import com.example.tennisapp.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

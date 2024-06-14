@@ -1,5 +1,7 @@
-package com.example.tennisapp.user;
+package com.example.tennisapp.services;
 
+import com.example.tennisapp.models.User;
+import com.example.tennisapp.daos.UserDao;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

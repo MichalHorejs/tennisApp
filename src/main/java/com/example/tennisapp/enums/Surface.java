@@ -1,4 +1,4 @@
-package com.example.tennisapp.court;
+package com.example.tennisapp.enums;
 
 public enum Surface {
     GRASS, CLAY, HARD, ARTIFICIAL

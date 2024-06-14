@@ -1,6 +1,6 @@
 package com.example.tennisapp.security.service;
 
-import com.example.tennisapp.user.UserDao;
+import com.example.tennisapp.daos.UserDao;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

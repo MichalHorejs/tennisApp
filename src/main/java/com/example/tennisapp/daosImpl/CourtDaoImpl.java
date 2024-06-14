@@ -1,5 +1,7 @@
-package com.example.tennisapp.court;
+package com.example.tennisapp.daosImpl;
 
+import com.example.tennisapp.models.Court;
+import com.example.tennisapp.daos.CourtDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -31,7 +33,7 @@ public class CourtDaoImpl implements CourtDao {
 
     @Override
     @Transactional
-    public void addCourt(Court court) {
+    public void save(Court court) {
         entityManager.persist(court);
     }
 

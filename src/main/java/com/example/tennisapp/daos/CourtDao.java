@@ -1,4 +1,6 @@
-package com.example.tennisapp.court;
+package com.example.tennisapp.daos;
+
+import com.example.tennisapp.models.Court;
 
 import java.util.List;
 
@@ -6,5 +8,5 @@ public interface CourtDao {
 
     List<Court> getCourts();
     Court getCourtById(Long courtId);
-    void addCourt(Court court);
+    void save(Court court);
 }

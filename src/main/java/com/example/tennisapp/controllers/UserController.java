@@ -1,5 +1,7 @@
-package com.example.tennisapp.user;
+package com.example.tennisapp.controllers;
 
+import com.example.tennisapp.models.User;
+import com.example.tennisapp.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

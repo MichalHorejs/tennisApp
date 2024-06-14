@@ -1,5 +1,6 @@
-package com.example.tennisapp.user;
+package com.example.tennisapp.models;
 
+import com.example.tennisapp.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

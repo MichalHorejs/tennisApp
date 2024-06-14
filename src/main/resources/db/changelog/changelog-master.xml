@@ -6,6 +6,5 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <include file="mychangelogs/create-tables.yaml" relativeToChangelogFile="true" />
-    <include file="/mychangelogs/insert-data.yaml" relativeToChangelogFile="true" />
 
 </databaseChangeLog>

@@ -1,7 +1,9 @@
-package com.example.tennisapp.court;
+package com.example.tennisapp.controllers;
 
+import com.example.tennisapp.models.Court;
+import com.example.tennisapp.services.CourtService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,14 +11,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/court")
+@AllArgsConstructor
 public class CourtController {
 
     private final CourtService courtService;
-
-    @Autowired
-    public CourtController(CourtService courtService) {
-        this.courtService = courtService;
-    }
 
     @GetMapping
     public List<Court> getCourt() {

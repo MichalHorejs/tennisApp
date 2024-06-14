@@ -1,8 +1,8 @@
 package com.example.tennisapp.security.service;
 
 import com.example.tennisapp.security.models.AuthenticationResponse;
-import com.example.tennisapp.user.User;
-import com.example.tennisapp.user.UserDao;
+import com.example.tennisapp.models.User;
+import com.example.tennisapp.daos.UserDao;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

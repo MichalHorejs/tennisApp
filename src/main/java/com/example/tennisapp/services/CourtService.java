@@ -1,21 +1,19 @@
-package com.example.tennisapp.court;
+package com.example.tennisapp.services;
 
+import com.example.tennisapp.models.Court;
+import com.example.tennisapp.daos.CourtDao;
 import com.example.tennisapp.exceptions.BadRequestException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class CourtService {
 
     private final CourtDao courtDao;
-
-    @Autowired
-    public CourtService(CourtDao courtDao) {
-        this.courtDao = courtDao;
-    }
 
     public List<Court> getCourts() {
         return this.courtDao.getCourts();
@@ -33,6 +31,6 @@ public class CourtService {
 
     @Transactional
     public void addCourt(Court court) {
-        this.courtDao.addCourt(court);
+        this.courtDao.save(court);
     }
 }
