@@ -1,5 +1,6 @@
 package com.example.tennisapp.controllers;
 
+import com.example.tennisapp.dtos.user.UserDeleteDto;
 import com.example.tennisapp.dtos.user.UserPutDto;
 import com.example.tennisapp.dtos.user.UserResponse;
 import com.example.tennisapp.models.User;
@@ -31,6 +32,14 @@ public class UserController {
         public ResponseEntity<?> update(@RequestBody UserPutDto userPutDto) {
             this.userService.update(
                     new User(userPutDto.getPhoneNumber(), userPutDto.getName(), userPutDto.getPassword())
+            );
+            return ResponseEntity.ok().build();
+        }
+
+        @DeleteMapping
+        public ResponseEntity<?> delete(@RequestBody UserDeleteDto userDeleteDto){
+            this.userService.delete(
+                    new User(userDeleteDto.getPhoneNumber())
             );
             return ResponseEntity.ok().build();
         }

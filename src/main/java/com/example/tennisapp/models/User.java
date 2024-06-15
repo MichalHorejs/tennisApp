@@ -44,6 +44,10 @@ public class User implements UserDetails  {
         this.password = password;
     }
 
+    public User(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -47,5 +47,19 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    @Override
+    @Transactional
+    public Optional<User> delete(User toUpdateUser) {
+        Optional<User> user = getUserByPhoneNumber(toUpdateUser.getPhoneNumber());
+
+        if (user.isEmpty()) {
+            return Optional.empty();
+        } else {
+            user.get().setIsDeleted(true);
+            entityManager.merge(user.get());
+            return user;
+        }
+    }
+
 
 }

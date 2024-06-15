@@ -34,4 +34,10 @@ public class UserService {
         this.userDao.update(user)
                 .orElseThrow(() -> new BadRequestException("User not found"));
     }
+
+    public void delete(User user) {
+        this.userDao.delete(user)
+                .orElseThrow(() -> new BadRequestException("User not found"));
+
+    }
 }
