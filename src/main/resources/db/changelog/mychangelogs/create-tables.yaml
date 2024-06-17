@@ -20,6 +20,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: price
+                  type: decimal(10,2)
+                  constraints:
+                    nullable: false
+              - column:
                   name: isDeleted
                   type: boolean
                   defaultValueBoolean: false
@@ -56,6 +61,66 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: ISDELETED
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+  # RESERVATION TABLE
+  - changeSet:
+      id: 3
+      author: Michal
+      changes:
+        - createTable:
+            tableName: reservation
+            columns:
+              - column:
+                  name: reservationId
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: phoneNumber
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_reservation_user
+                    references: users(PHONENUMBER)
+              - column:
+                  name: courtId
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_reservation_court
+                    references: court(courtId)
+              - column:
+                  name: date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: startTime
+                  type: time
+                  constraints:
+                    nullable: false
+              - column:
+                  name: endTime
+                  type: time
+                  constraints:
+                    nullable: false
+              - column:
+                  name: isDoubles
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: decimal(10,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: isDeleted
                   type: boolean
                   defaultValueBoolean: false
                   constraints:

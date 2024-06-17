@@ -3,7 +3,8 @@ package com.example.tennisapp.models;
 import com.example.tennisapp.enums.Surface;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "COURT")
@@ -20,20 +21,16 @@ public class Court {
     @Column(name = "SURFACE")
     private Surface surface;
 
+    @Column(name = "PRICE")
+    private Double price;
+
     @JsonIgnore
     @Column(name = "ISDELETED")
     private Boolean isDeleted = false;
 
-    public Court(Surface surface) {
+    public Court(Surface surface, Double price) {
         this.surface = surface;
+        this.price = price;
     }
 
-    public Court(Long courtId, Surface surface) {
-        this.courtId = courtId;
-        this.surface = surface;
-    }
-
-    public Court(Long courtId) {
-        this.courtId = courtId;
-    }
 }

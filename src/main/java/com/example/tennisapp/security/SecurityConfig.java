@@ -38,6 +38,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**", "/h2-console/**")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/**").hasAnyAuthority("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/reservation").hasAnyAuthority("USER", "ADMIN")
                         .requestMatchers("/**").hasAuthority("ADMIN")
                         .anyRequest()
                         .authenticated()

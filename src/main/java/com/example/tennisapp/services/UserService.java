@@ -1,5 +1,7 @@
 package com.example.tennisapp.services;
 
+import com.example.tennisapp.dtos.user.UserDeleteDto;
+import com.example.tennisapp.dtos.user.UserPutDto;
 import com.example.tennisapp.enums.Role;
 import com.example.tennisapp.exceptions.BadRequestException;
 import com.example.tennisapp.models.User;
@@ -20,7 +22,6 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-//    @Transactional
     public void save(User user) {
         if (user.getRole().equals(Role.ADMIN)) {
             throw new BadRequestException("Admin cannot be registered");
@@ -29,15 +30,19 @@ public class UserService {
         userDao.save(user);
     }
 
-    public void update(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        this.userDao.update(user)
-                .orElseThrow(() -> new BadRequestException("User not found"));
+    public void update(UserPutDto userPutDto) {
+        User existingUser = this.getUserByPhoneNumber(userPutDto.getPhoneNumber());
+        existingUser.setName(userPutDto.getName());
+        existingUser.setPassword(passwordEncoder.encode(userPutDto.getPassword()));
+
+        this.userDao.update(existingUser);
     }
 
-    public void delete(User user) {
-        this.userDao.delete(user)
-                .orElseThrow(() -> new BadRequestException("User not found"));
+    public void delete(UserDeleteDto userDeleteDto) {
+        User user = this.getUserByPhoneNumber(userDeleteDto.getPhoneNumber());
+        user.setIsDeleted(true);
+
+        this.userDao.update(user);
 
     }
 }

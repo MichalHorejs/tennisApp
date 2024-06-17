@@ -5,12 +5,14 @@ import com.example.tennisapp.daos.CourtDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Transactional
 public class CourtDaoImpl implements CourtDao {
 
 
@@ -28,9 +30,11 @@ public class CourtDaoImpl implements CourtDao {
     @Override
     public Optional<Court> getCourtById(Long courtId) {
         String query = "SELECT c FROM Court c WHERE c.id = :courtId AND c.isDeleted = false";
-        TypedQuery<Court> typedQuery = entityManager.createQuery(query, Court.class);
-        typedQuery.setParameter("courtId", courtId);
-        Court court = typedQuery.getResultStream().findFirst().orElse(null);
+        Court court = entityManager.createQuery(query, Court.class)
+                .setParameter("courtId", courtId)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
         return Optional.ofNullable(court);
     }
 
@@ -40,30 +44,8 @@ public class CourtDaoImpl implements CourtDao {
     }
 
     @Override
-    public Optional<Court> update(Court toUpdateCourt) {
-        Optional<Court> court = getCourtById(toUpdateCourt.getCourtId());
-
-        if (court.isEmpty()) {
-            return Optional.empty();
-        } else {
-            court.get().setSurface(toUpdateCourt.getSurface());
-            entityManager.merge(court.get());
-            return court;
-        }
+    public void update(Court court) {
+        entityManager.merge(court);
     }
-
-    @Override
-    public Optional<Court> delete(Court toDeleteCourt) {
-        Optional<Court> court = getCourtById(toDeleteCourt.getCourtId());
-
-        if (court.isEmpty()) {
-            return Optional.empty();
-        } else {
-            court.get().setIsDeleted(true);
-            entityManager.merge(court.get());
-            return court;
-        }
-    }
-
 
 }

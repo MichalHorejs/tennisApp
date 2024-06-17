@@ -16,4 +16,8 @@ public class CourtPutDto {
 
     @NotNull(message = "Surface cannot be null")
     private Surface surface;
+
+    @NotNull(message = "Price cannot be null")
+    @Positive(message = "CourtId must be positive")
+    private Double price;
 }

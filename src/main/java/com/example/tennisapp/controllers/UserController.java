@@ -30,17 +30,13 @@ public class UserController {
 
         @PutMapping
         public ResponseEntity<?> update(@RequestBody UserPutDto userPutDto) {
-            this.userService.update(
-                    new User(userPutDto.getPhoneNumber(), userPutDto.getName(), userPutDto.getPassword())
-            );
+            this.userService.update(userPutDto);
             return ResponseEntity.ok().build();
         }
 
         @DeleteMapping
         public ResponseEntity<?> delete(@RequestBody UserDeleteDto userDeleteDto){
-            this.userService.delete(
-                    new User(userDeleteDto.getPhoneNumber())
-            );
+            this.userService.delete(userDeleteDto);
             return ResponseEntity.ok().build();
         }
 }

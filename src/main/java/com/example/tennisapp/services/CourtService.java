@@ -1,9 +1,10 @@
 package com.example.tennisapp.services;
 
-import com.example.tennisapp.models.Court;
 import com.example.tennisapp.daos.CourtDao;
+import com.example.tennisapp.dtos.court.CourtDeleteDto;
+import com.example.tennisapp.dtos.court.CourtPutDto;
 import com.example.tennisapp.exceptions.BadRequestException;
-import jakarta.transaction.Transactional;
+import com.example.tennisapp.models.Court;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,20 +29,20 @@ public class CourtService {
                 .orElseThrow(() -> new BadRequestException("Court not found"));
     }
 
-    @Transactional
     public void save(Court court) {
         this.courtDao.save(court);
     }
 
-    @Transactional
-    public void update(Court court) {
-        this.courtDao.update(court)
-                .orElseThrow(() -> new BadRequestException("Court not found"));
+    public void update(CourtPutDto courtPutDto) {
+        Court court = this.getCourtById(courtPutDto.getCourtId());
+        court.setSurface(courtPutDto.getSurface());
+        court.setPrice(courtPutDto.getPrice());
+        this.courtDao.update(court);
     }
 
-    @Transactional
-    public void delete(Court court) {
-        this.courtDao.delete(court)
-                .orElseThrow(() -> new BadRequestException("Court not found"));
+    public void delete(CourtDeleteDto courtDeleteDto) {
+        Court court = this.getCourtById(courtDeleteDto.getCourtId());
+        court.setIsDeleted(true);
+        this.courtDao.update(court);
     }
 }

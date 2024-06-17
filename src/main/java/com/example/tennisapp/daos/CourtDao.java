@@ -10,6 +10,5 @@ public interface CourtDao {
     List<Court> getCourts();
     Optional<Court> getCourtById(Long courtId);
     void save(Court court);
-    Optional<Court> update(Court court);
-    Optional<Court> delete(Court court);
+    void update(Court court);
 }
