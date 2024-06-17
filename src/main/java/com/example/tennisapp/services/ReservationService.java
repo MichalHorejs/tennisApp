@@ -1,9 +1,7 @@
 package com.example.tennisapp.services;
 
 import com.example.tennisapp.daos.ReservationDao;
-import com.example.tennisapp.dtos.reservation.ReservationDeleteDto;
-import com.example.tennisapp.dtos.reservation.ReservationPostDto;
-import com.example.tennisapp.dtos.reservation.ReservationPutDto;
+import com.example.tennisapp.dtos.reservation.*;
 import com.example.tennisapp.exceptions.BadRequestException;
 import com.example.tennisapp.models.Court;
 import com.example.tennisapp.models.Reservation;
@@ -13,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -28,8 +28,30 @@ public class ReservationService {
                 .orElseThrow(() -> new BadRequestException("Reservation not found"));
     }
 
+    public List<ReservationFullResponse> getReservationsByPhone(ReservationGetPhoneDto reservationGetPhoneDto) {
+        List<Reservation> reservations =  reservationDao.getReservationsByPhone(
+                userService.getUserByPhoneNumber(reservationGetPhoneDto.getPhoneNumber()),
+                reservationGetPhoneDto.isFutureOnly()
+        );
+
+        return reservations.stream()
+                .map(ReservationFullResponse::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<ReservationFullResponse> getReservationsByCourt(ReservationGetCourtDto reservationGetCourtDto) {
+        List<Reservation> reservations =  reservationDao.getReservationsByCourt(
+                courtService.getCourtById(reservationGetCourtDto.getCourtId()),
+                reservationGetCourtDto.isFutureOnly()
+        );
+
+        return reservations.stream()
+                .map(ReservationFullResponse::new)
+                .collect(Collectors.toList());
+    }
+
     // Saves new reservation
-    public void save(ReservationPostDto reservationPostDto) {
+    public ReservationResponse save(ReservationPostDto reservationPostDto) {
         User user = userService.getUserByPhoneNumber(reservationPostDto.getPhoneNumber());
         Court court = courtService.getCourtById(reservationPostDto.getCourtId());
 
@@ -48,10 +70,12 @@ public class ReservationService {
         }
 
         reservationDao.save(reservation);
+
+        return new ReservationResponse(reservation.getPrice());
     }
 
     // Updates existing reservation
-    public void update(ReservationPutDto reservationPutDto) {
+    public ReservationResponse update(ReservationPutDto reservationPutDto) {
 
         // Check if user and court exists
         User user = userService.getUserByPhoneNumber(reservationPutDto.getPhoneNumber());
@@ -84,10 +108,12 @@ public class ReservationService {
         existingReservation.setPrice(newReservation.getPrice());
 
         reservationDao.update(existingReservation);
+
+        return new ReservationResponse(existingReservation.getPrice());
     }
 
     // Soft deletes existing reservation
-    public void delete(ReservationDeleteDto reservationDeleteDto){
+    public void delete(ReservationDeleteDto reservationDeleteDto) {
         Reservation reservation = this.getReservationById(reservationDeleteDto.getReservationId());
         reservation.setIsDeleted(true);
 
@@ -116,4 +142,5 @@ public class ReservationService {
 
         return isWholeHour && duration && startTime.isBefore(endTime);
     }
+
 }

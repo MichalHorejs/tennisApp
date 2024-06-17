@@ -120,6 +120,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: reservationCreated
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
                   name: isDeleted
                   type: boolean
                   defaultValueBoolean: false

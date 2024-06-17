@@ -1,5 +1,6 @@
 package com.example.tennisapp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,11 +21,11 @@ public class Reservation {
     @Column(name = "RESERVATIONID")
     private Long reservationId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "PHONENUMBER", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "COURTID", nullable = false)
     private Court court;
 
@@ -43,6 +44,9 @@ public class Reservation {
     @Column(name = "PRICE")
     private Double price;
 
+    @Column(name = "RESERVATIONCREATED")
+    private Date reservationCreated;
+
     @Column(name = "ISDELETED")
     private Boolean isDeleted = false;
 
@@ -56,6 +60,7 @@ public class Reservation {
         this.endTime = endTime;
         this.isDoubles = isDoubles;
         this.price = calculatePrice();
+        this.reservationCreated = new Date(System.currentTimeMillis());
     }
 
     private Double calculatePrice() {
