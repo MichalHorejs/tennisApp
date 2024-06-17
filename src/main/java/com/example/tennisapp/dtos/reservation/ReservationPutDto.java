@@ -26,11 +26,9 @@ public class ReservationPutDto {
     Date date;
 
     @NotNull(message = "Start time cannot be null")
-    // TODO: custom annotation for time validation
     Time startTime;
 
     @NotNull(message = "End time cannot be null")
-    // TODO: custom annotation for time validation
     Time endTime;
 
     @NotNull(message = "Is doubles cannot be null")
