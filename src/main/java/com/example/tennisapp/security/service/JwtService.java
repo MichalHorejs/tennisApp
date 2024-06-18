@@ -22,8 +22,11 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    @Value("${jwt.expiration}")
-    private long expiration;
+    @Value("${jwt.expiration.accessToken}")
+    private long expirationAccess;
+
+    @Value("${jwt.expiration.refreshToken}")
+    private long expirationRefresh;
 
     private final TokenDao tokenDao;
 
@@ -36,15 +39,25 @@ public class JwtService {
     public boolean isValid(String token, UserDetails user) {
         String phoneNumber = extractPhoneNumber(token);
 
-        boolean isValidToken = tokenDao.findByToken(token)
+        boolean isValidToken = tokenDao.findByAccessToken(token)
                 .map(t -> !t.isLoggedOut())
                 .orElse(false);
 
-        return (phoneNumber.equals(user.getUsername())) && !isTokenExpired(token) && isValidToken;
+        return (phoneNumber.equals(user.getUsername())) && isTokenExpired(token) && isValidToken;
+    }
+
+    public boolean isValidRefreshToken(String token, User user) {
+        String phoneNumber = extractPhoneNumber(token);
+
+        boolean isValidRefreshToken = tokenDao.findByRefreshToken(token)
+                .map(t -> !t.isLoggedOut())
+                .orElse(false);
+
+        return (phoneNumber.equals(user.getUsername())) && isTokenExpired(token) && isValidRefreshToken;
     }
 
     private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
+        return !extractExpiration(token).before(new Date());
     }
 
     private Date extractExpiration(String token) {
@@ -65,11 +78,19 @@ public class JwtService {
     }
 
     // Generate a token for the user on login
-    public String generateToken(User user) {
+    public String generateAccessToken(User user) {
+        return generateToken(user, expirationAccess);
+    }
+
+    public String generateRefreshToken(User user) {
+        return generateToken(user, expirationRefresh);
+    }
+
+    private String generateToken(User user, long expiration) {
         return Jwts.builder()
                 .subject(user.getPhoneNumber())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * expiration))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * expiration))
                 .signWith(getSignInKey())
                 .compact();
     }

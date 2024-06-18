@@ -7,7 +7,12 @@ import com.example.tennisapp.models.User;
 import com.example.tennisapp.security.daos.TokenDao;
 import com.example.tennisapp.security.models.AuthenticationResponse;
 import com.example.tennisapp.security.models.Token;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,11 +43,12 @@ public class AuthenticationService {
         // save new User
         userDao.save(user);
 
-        String jwt = jwtService.generateToken(user);
+        String accessToken = jwtService.generateAccessToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
 
-        saveUserToken(jwt, user);
+        saveUserToken(accessToken, refreshToken, user);
 
-        return new AuthenticationResponse(jwt);
+        return new AuthenticationResponse(accessToken, refreshToken);
     }
 
     public AuthenticationResponse authenticate(User request){
@@ -55,18 +61,19 @@ public class AuthenticationService {
 
         User user = userDao.getUserByPhoneNumber(request.getPhoneNumber())
                 .orElseThrow(() -> new BadRequestException("User not found"));
-        String token = jwtService.generateToken(user);
+
+        String accessToken = jwtService.generateAccessToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
 
         revokeAllTokens(user);
+        saveUserToken(accessToken, refreshToken, user);
 
-
-        saveUserToken(token, user);
-
-        return new AuthenticationResponse(token);
+        return new AuthenticationResponse(accessToken, refreshToken);
     }
 
+    // revoke all tokens for a user
     private void revokeAllTokens(User user) {
-        List<Token> validTokenList = tokenDao.findAllTokensByUser(user.getPhoneNumber());
+        List<Token> validTokenList = tokenDao.findAllAccessTokensByUser(user.getPhoneNumber());
 
         if(!validTokenList.isEmpty()){
             validTokenList.forEach(t -> t.setLoggedOut(true));
@@ -75,13 +82,45 @@ public class AuthenticationService {
         tokenDao.saveAll(validTokenList);
     }
 
-    // save token to database
-    private void saveUserToken(String jwt, User user) {
+    // save new token to database
+    private void saveUserToken(String accessToken, String refreshToken, User user) {
         Token token = new Token();
-        token.setToken(jwt);
+        token.setAccessToken(accessToken);
+        token.setRefreshToken(refreshToken);
         token.setLoggedOut(false);
         token.setUser(user);
         tokenDao.save(token);
     }
 
+    public ResponseEntity refreshToken(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+
+        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        String token = authHeader.substring(7);
+
+        String phoneNumber = jwtService.extractPhoneNumber(token);
+
+        User user = userDao.getUserByPhoneNumber(phoneNumber)
+                .orElseThrow(() -> new BadRequestException("User not found"));
+
+        if(jwtService.isValidRefreshToken(token, user)){
+            String accessToken = jwtService.generateAccessToken(user);
+            String refreshToken = jwtService.generateRefreshToken(user);
+
+            revokeAllTokens(user);
+            saveUserToken(accessToken, refreshToken, user);
+
+            return new ResponseEntity(new AuthenticationResponse(accessToken, refreshToken), HttpStatus.OK);
+        }
+
+        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+
+    }
 }

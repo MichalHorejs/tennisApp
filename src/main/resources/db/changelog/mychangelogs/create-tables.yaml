@@ -146,7 +146,12 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: TOKEN
+                  name: ACCESSTOKEN
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: REFRESHTOKEN
                   type: varchar(255)
                   constraints:
                     nullable: false

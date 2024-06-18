@@ -18,7 +18,7 @@ public class TokenDaoImpl implements TokenDao {
     private EntityManager entityManager;
 
     @Override
-    public List<Token> findAllTokensByUser(String phoneNumber) {
+    public List<Token> findAllAccessTokensByUser(String phoneNumber) {
         String query = "SELECT t FROM Token t WHERE " +
                 "t.user.phoneNumber = :phoneNumber AND t.loggedOut = false";
 
@@ -28,8 +28,17 @@ public class TokenDaoImpl implements TokenDao {
     }
 
     @Override
-    public Optional<Token> findByToken(String token) {
-        String query = "SELECT t FROM Token t WHERE t.token = :token";
+    public Optional<Token> findByAccessToken(String token) {
+        String query = "SELECT t FROM Token t WHERE t.accessToken = :token";
+        return entityManager.createQuery(query, Token.class)
+                .setParameter("token", token)
+                .getResultStream()
+                .findFirst();
+    }
+
+    @Override
+    public Optional<Token> findByRefreshToken(String token) {
+        String query = "SELECT t FROM Token t WHERE t.refreshToken = :token";
         return entityManager.createQuery(query, Token.class)
                 .setParameter("token", token)
                 .getResultStream()
@@ -52,4 +61,5 @@ public class TokenDaoImpl implements TokenDao {
     public void update(Token token) {
         entityManager.merge(token);
     }
+
 }

@@ -14,8 +14,11 @@ public class Token {
     @Column(name = "ID")
     private Integer id;
 
-    @Column(name = "TOKEN")
-    private String token;
+    @Column(name = "ACCESSTOKEN")
+    private String accessToken;
+
+    @Column(name = "REFRESHTOKEN")
+    private String refreshToken;
 
     @Column(name = "LOGGEDOUT")
     private boolean loggedOut;

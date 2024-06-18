@@ -38,6 +38,7 @@ public class ReservationController {
         return ResponseEntity.ok(response);
     }
 
+
     @PutMapping
     public ResponseEntity<?> update(@RequestBody ReservationPutDto reservationPutDto) {
         ReservationResponse response = this.reservationService.update(reservationPutDto);

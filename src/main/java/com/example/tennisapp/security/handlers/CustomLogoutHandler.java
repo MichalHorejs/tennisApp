@@ -29,7 +29,7 @@ public class CustomLogoutHandler implements LogoutHandler {
         String token = authHeader.substring(7);
 
         // Invalidate active token
-        Token activeToken = tokenDao.findByToken(token)
+        Token activeToken = tokenDao.findByAccessToken(token)
                 .orElse(null);
 
         if (activeToken != null) {

@@ -7,8 +7,9 @@ import java.util.Optional;
 
 public interface TokenDao {
 
-    List<Token> findAllTokensByUser(String phoneNumber);
-    Optional<Token> findByToken(String token);
+    List<Token> findAllAccessTokensByUser(String phoneNumber);
+    Optional<Token> findByAccessToken(String token);
+    Optional<Token> findByRefreshToken(String token);
     void save(Token token);
     void saveAll(List<Token> tokens);
     void update(Token token);

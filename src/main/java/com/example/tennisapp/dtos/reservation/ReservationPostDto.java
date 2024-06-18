@@ -1,5 +1,6 @@
 package com.example.tennisapp.dtos.reservation;
 
+import com.example.tennisapp.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +14,7 @@ import java.sql.Time;
 public class ReservationPostDto {
 
     @NotNull(message = "User cannot be null")
-    String phoneNumber;
+    User user;
 
     @NotNull(message = "Court cannot be null")
     Long courtId;

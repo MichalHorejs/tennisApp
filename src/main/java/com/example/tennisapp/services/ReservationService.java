@@ -2,6 +2,7 @@ package com.example.tennisapp.services;
 
 import com.example.tennisapp.daos.ReservationDao;
 import com.example.tennisapp.dtos.reservation.*;
+import com.example.tennisapp.enums.Role;
 import com.example.tennisapp.exceptions.BadRequestException;
 import com.example.tennisapp.models.Court;
 import com.example.tennisapp.models.Reservation;
@@ -52,7 +53,19 @@ public class ReservationService {
 
     // Saves new reservation
     public ReservationResponse save(ReservationPostDto reservationPostDto) {
-        User user = userService.getUserByPhoneNumber(reservationPostDto.getPhoneNumber());
+        User user;
+        try {
+            user = userService.getUserByPhoneNumber(reservationPostDto.getUser().getPhoneNumber());
+        } catch (RuntimeException e) {
+            user = new User(
+                    reservationPostDto.getUser().getPhoneNumber(),
+                    reservationPostDto.getUser().getName(),
+                    reservationPostDto.getUser().getPassword()
+            );
+            user.setRole(Role.USER);
+            userService.save(user);
+        }
+
         Court court = courtService.getCourtById(reservationPostDto.getCourtId());
 
         Reservation reservation = new Reservation(
