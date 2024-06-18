@@ -1,6 +1,7 @@
 package com.example.tennisapp.models;
 
 import com.example.tennisapp.enums.Role;
+import com.example.tennisapp.security.models.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -130,3 +130,35 @@ databaseChangeLog:
                   defaultValueBoolean: false
                   constraints:
                     nullable: false
+  # TOKEN TABLE
+  - changeSet:
+      id: 4
+      author: Michal
+      changes:
+        - createTable:
+            tableName: TOKEN
+            columns:
+              - column:
+                  name: ID
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: TOKEN
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: LOGGEDOUT
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: PHONENUMBER
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_token_user
+                    references: users(PHONENUMBER)
