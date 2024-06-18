@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * This class represents the response for an authentication request.
+ * It contains the access token and the refresh token.
+ */
 @AllArgsConstructor
 @Getter
 public class AuthenticationResponse {

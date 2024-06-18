@@ -1,7 +1,6 @@
 package com.example.tennisapp.models;
 
 import com.example.tennisapp.enums.Role;
-import com.example.tennisapp.security.models.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,6 +13,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * This class represents a user in the tennis court booking system.
+ * It implements the UserDetails interface for Spring Security.
+ * It contains the phone number, name, password, role, and a flag indicating if the user is deleted.
+ */
 @Entity
 @Data
 @AllArgsConstructor
@@ -49,6 +53,9 @@ public class User implements UserDetails  {
         this.phoneNumber = phoneNumber;
     }
 
+
+    // The following methods are required by the UserDetails interface
+    // and are used by Spring Security to authenticate users.
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {

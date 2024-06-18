@@ -5,6 +5,9 @@ import com.example.tennisapp.models.Court;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Interface for the CourtDao class
+ */
 public interface CourtDao {
 
     List<Court> getCourts();

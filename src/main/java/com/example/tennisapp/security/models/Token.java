@@ -4,6 +4,10 @@ import com.example.tennisapp.models.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
+/**
+ * This class represents the Token entity in the database.
+ * It contains fields for the token ID, access token, refresh token, logged out status, and the associated user.
+ */
 @Entity
 @Table(name = "TOKEN")
 @Data

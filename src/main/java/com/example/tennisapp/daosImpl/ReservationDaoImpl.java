@@ -15,6 +15,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class implements the ReservationDao interface.
+ * It is used to interact with the database and perform operations on the Reservation entity.
+ */
 @Repository
 @AllArgsConstructor
 @Transactional
@@ -23,6 +27,11 @@ public class ReservationDaoImpl implements ReservationDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     * This method retrieves a reservation by its ID.
+     * @param reservationId ID of the reservation to retrieve.
+     * @return Optional<Reservation> The reservation with the given ID, if it exists.
+     */
     @Override
     public Optional<Reservation> getReservationById(Long reservationId) {
         String query = "SELECT r FROM Reservation r WHERE r.id = :reservationId AND r.isDeleted = false";
@@ -36,16 +45,30 @@ public class ReservationDaoImpl implements ReservationDao {
         return Optional.ofNullable(reservation);
     }
 
+    /**
+     * This method saves a new reservation to the database.
+     * @param reservation The reservation to save.
+     */
     @Override
     public void save(Reservation reservation) {
         entityManager.persist(reservation);
     }
 
+    /**
+     * This method updates an existing reservation in the database.
+     * @param reservation The reservation to update.
+     */
     @Override
     public void update(Reservation reservation) {
         entityManager.merge(reservation);
     }
 
+    /**
+     * This method retrieves a list of reservations by a user's phone number.
+     * @param user The user whose phone number to use.
+     * @param futureOnly If true, only reservations in the future are returned.
+     * @return List<Reservation> The list of reservations.
+     */
     @Override
     public List<Reservation> getReservationsByPhone(User user, boolean futureOnly) {
         StringBuilder query = new StringBuilder("SELECT r FROM Reservation r WHERE " +
@@ -67,6 +90,12 @@ public class ReservationDaoImpl implements ReservationDao {
 
     }
 
+    /**
+     * This method retrieves a list of reservations by court.
+     * @param court The court to retrieve reservations for.
+     * @param futureOnly If true, only reservations in the future are returned.
+     * @return List<Reservation> The list of reservations.
+     */
     @Override
     public List<Reservation> getReservationsByCourt(Court court, boolean futureOnly) {
         StringBuilder query = new StringBuilder("SELECT r FROM Reservation r WHERE " +
@@ -89,10 +118,14 @@ public class ReservationDaoImpl implements ReservationDao {
         return queryResult.getResultList();
     }
 
-    // Check if court is available for reservation
-    // excludeReservationId is used to exclude the current reservation from the check
-    // this is used when updating a reservation
-    // to not exculde insert: excludeReservationId = 0L
+    /**
+     * This method checks if a court is available for a reservation.
+     * @param reservation The reservation to check.
+     * @param excludeReservationId The ID of a reservation to exclude from the check.
+     *                             This is used when updating a reservation.
+     *                             To not exculde insert: excludeReservationId = 0L .
+     * @return boolean True if the court is available, false otherwise.
+     */
     @Override
     public boolean isCourtAvailable(Reservation reservation, Long excludeReservationId) {
         String query = "SELECT r FROM Reservation r WHERE " +

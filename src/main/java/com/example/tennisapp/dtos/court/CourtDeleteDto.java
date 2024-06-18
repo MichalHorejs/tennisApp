@@ -5,6 +5,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
+/**
+ * This class represents a data transfer object for deleting a court.
+ * It contains the ID of the court to be deleted.
+ */
 @Data
 @JsonIgnoreProperties()
 public class CourtDeleteDto {

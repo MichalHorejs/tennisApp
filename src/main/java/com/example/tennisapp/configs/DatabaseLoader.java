@@ -15,6 +15,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+/**
+ * This class is responsible for loading initial data into the database.
+ * Amount of data loaded is controlled by the application.properties file.
+ */
 @Component
 @RequiredArgsConstructor
 public class DatabaseLoader {
@@ -30,6 +34,11 @@ public class DatabaseLoader {
     private final PasswordEncoder passwordEncoder;
     private final ReservationDao reservationDao;
 
+    /**
+     * This method is run at application startup and loads initial data into the database.
+     *
+     * @return CommandLineRunner object that Spring Boot will run at startup.
+     */
     @Bean
     CommandLineRunner commandLineRunner() {
         return args -> {

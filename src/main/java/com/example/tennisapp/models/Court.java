@@ -6,6 +6,10 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * This class represents a tennis court.
+ * It contains the court ID, surface type, price, and a flag indicating if the court is deleted.
+ */
 @Entity
 @Table(name = "COURT")
 @Data

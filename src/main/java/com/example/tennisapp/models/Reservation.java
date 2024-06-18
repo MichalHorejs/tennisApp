@@ -10,6 +10,12 @@ import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalTime;
 
+/**
+ * This class represents a reservation in the tennis court booking system.
+ * It contains the reservation ID, user, court, date, start time, end time,
+ * a flag indicating if the reservation is for doubles, the price,
+ * the date when the reservation was created, and a flag indicating if the reservation is deleted.
+ */
 @Entity
 @Table(name = "RESERVATION")
 @Data

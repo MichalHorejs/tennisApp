@@ -6,6 +6,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
+/**
+ * This class represents a data transfer object for posting a court.
+ * It contains the surface type and price of the court to be added.
+ */
 @Data
 @JsonIgnoreProperties()
 public class CourtPostDto {

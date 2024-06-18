@@ -9,6 +9,10 @@ import lombok.Data;
 import java.sql.Date;
 import java.sql.Time;
 
+/**
+ * This class represents a data transfer object for posting a reservation.
+ * It contains the user who made the reservation, the ID of the court, the date and time of the reservation, and a flag indicating whether it's a doubles match.
+ */
 @Data
 @JsonIgnoreProperties
 public class ReservationPostDto {

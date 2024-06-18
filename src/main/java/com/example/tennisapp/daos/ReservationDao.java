@@ -7,6 +7,9 @@ import com.example.tennisapp.models.User;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Interface for ReservationDao
+ */
 public interface ReservationDao {
 
     Optional<Reservation> getReservationById(Long reservationId);

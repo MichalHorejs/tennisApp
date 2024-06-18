@@ -23,6 +23,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * This class represents the security configuration for the application.
+ * It sets up the security filter chain, the password encoder, and the authentication manager.
+ */
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
@@ -33,6 +37,15 @@ public class SecurityConfig {
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final CustomLogoutHandler logoutHandler;
 
+    /**
+     * This method sets up the security filter chain.
+     * It configures the HTTP security settings, such as CSRF protection,
+     * session management, and URL-based access control.
+     * It also adds the JWT authentication filter to the filter chain.
+     * @param http The HttpSecurity object to configure.
+     * @return The SecurityFilterChain object.
+     * @throws Exception if an error occurs during configuration.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -65,12 +78,23 @@ public class SecurityConfig {
                 .build();
     }
 
+    /**
+     * This method provides a BCryptPasswordEncoder bean.
+     * This password encoder uses the BCrypt strong hashing function.
+     * @return The PasswordEncoder object.
+     */
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
-
+    /**
+     * This method provides an AuthenticationManager bean.
+     * The AuthenticationManager is used by Spring Security to handle authentication.
+     * @param configuration The AuthenticationConfiguration object.
+     * @return The AuthenticationManager object.
+     * @throws Exception if an error occurs during configuration.
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
